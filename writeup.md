@@ -1,8 +1,11 @@
 # Intro
+Challenge Link: https://cyberdefenders.org/blueteam-ctf-challenges/118#tab=questions
 ```
-A security breach occurred on a corporate network, and a device may have been infected with fileless malware. This malware operates entirely in memory, making it difficult to detect and analyze.
+A security breach occurred on a corporate network, and a device may have been infected with fileless malware.
+This malware operates entirely in memory, making it difficult to detect and analyze.
 
-The security team has extracted the NTUSER.DAT registry hive from the affected device. Your task is to analyze this file and identify any malicious activities associated with the fileless malware.
+The security team has extracted the NTUSER.DAT registry hive from the affected device.
+Your task is to analyze this file and identify any malicious activities associated with the fileless malware.
 ```
 
 ## Analyzing the registry file
@@ -63,8 +66,8 @@ The `JS` code appears to attempt to access the value in `HKCU\software\PDFViewer
 
 
 ```python
-# To determine how the fileless malware was executed on the device, we need to determine which trusted Windows process it hijacked. What is the name of the Windows-native binary used to run malicious code? mshta.exe
-# Understanding how the malware maintains its presence in the system without a file is crucial for detecting and eradicating the infection. What is the value name of the register string key that contains the malicious script? PDFViewer
+# Q1: To determine how the fileless malware was executed on the device, we need to determine which trusted Windows process it hijacked. What is the name of the Windows-native binary used to run malicious code? mshta.exe
+# Q2: Understanding how the malware maintains its presence in the system without a file is crucial for detecting and eradicating the infection. What is the value name of the register string key that contains the malicious script? PDFViewer
 ```
 
 ```python
@@ -91,7 +94,7 @@ eval(yWRHh23aHDjKD);
 ```
 
 ```python
-# To fully comprehend the attacker's approach in concealing the malware, it is imperative to determine the encryption technique and the key value utilized for decrypting the second stage. What is the exact key value required for decrypting the second stage of the malware?PzVmNVxNG0AxFv05k5PVgdNxlUynMPH9txZ4PqiE5vcTwLvxa
+# Q3: To fully comprehend the attacker's approach in concealing the malware, it is imperative to determine the encryption technique and the key value utilized for decrypting the second stage. What is the exact key value required for decrypting the second stage of the malware?PzVmNVxNG0AxFv05k5PVgdNxlUynMPH9txZ4PqiE5vcTwLvxa
 ```
 
 replace the `eval` with `console.log` and let's move to the second stage
@@ -112,7 +115,7 @@ catch(e){}
 close();
 ```
 
-![cyberChef](cyberchef.png)
+![cyberChef](photos/cyberchef.png)
 
 ```powershell
 $tiodsf2Gdefdaj= Get-ItemProperty -Path "HKCU:\Software\nsem" -Name "zorsuhg" |
@@ -135,8 +138,8 @@ It get the binary value that is stored in `HKCU:\Software\nsem\zorsuhg` and decr
 ![](photos/cyber2.png)
 
 ```python
-# To fully understand the scope of the fileless malware's payload, we need to find where it is stored. What is the value name of the registry string key that contains the encrypted executable? zorsuhg
-# Decrypting the malware's executable will allow us to analyze its behavior. What is the key value used to decrypt the executable?a15807dfe347ecaa57b9e232a611de0d96f2dac6e51c491217b5d6
+# Q4: To fully understand the scope of the fileless malware's payload, we need to find where it is stored. What is the value name of the registry string key that contains the encrypted executable? zorsuhg
+# Q5: Decrypting the malware's executable will allow us to analyze its behavior. What is the key value used to decrypt the executable?a15807dfe347ecaa57b9e232a611de0d96f2dac6e51c491217b5d6
 ```
 
 ```python
@@ -155,8 +158,8 @@ with open('binary', 'wb') as f:
 ![](photos/mal_fam.png)
 
 ```python
-# Comparing the hash of the decrypted executable against known threats can confirm its identity and inform our response strategy. What is the MD5 hash of the decrypted executable?F07E946C8273176316CF6D97DC780BD7
-# Identifying the malware family can provide context about the threat actors and their methodologies. What is the name of the malware family associated with this attack? redline
+# Q6: Comparing the hash of the decrypted executable against known threats can confirm its identity and inform our response strategy. What is the MD5 hash of the decrypted executable?F07E946C8273176316CF6D97DC780BD7
+# Q7: Identifying the malware family can provide context about the threat actors and their methodologies. What is the name of the malware family associated with this attack? redline
 ```
 
 Loading it in the `dnspy` you can find the key easily
@@ -164,5 +167,5 @@ Loading it in the `dnspy` you can find the key easily
 ![](photos/dnspy.gif)
 
 ```python
-# Understanding all decryption keys used by the malware can aid in revealing the full scope of the threat. What is the key used to decrypt the second stage of the executable? Bounxcwkdkigednzzwbux
+# Q8: Understanding all decryption keys used by the malware can aid in revealing the full scope of the threat. What is the key used to decrypt the second stage of the executable? Bounxcwkdkigednzzwbux
 ```
